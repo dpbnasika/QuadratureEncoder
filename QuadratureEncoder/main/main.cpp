@@ -15,14 +15,18 @@ void app_main();
 
 QuadratureEncoder encoder((gpio_num_t)32,(gpio_num_t)33);
 
-void forward(void *pvParameter)
-{
-    while(true){
-    	int direction = encoder.getDirection();
+void forward(void *pvParameter){
+	
+	int direction = encoder.getDirection();
     	if(direction == 1){
     		cout << "Forward RPM:  " << encoder.getRPM() << endl;
     	}
     	vTaskDelay(10);
+}
+void forward_loop(void *pvParameter)
+{
+    while(true){
+    	forward(pvParameter);
     }
 }
 void backward(void *pvParameter)
